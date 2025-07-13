@@ -1,0 +1,24 @@
+{# reader/templates/reader/article_list.html #}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>All Articles</title>
+</head>
+<body>
+  <h1>All Articles</h1>
+  <ul>
+    {% for a in articles %}
+      <li>
+        
+        <a href="{% url 'reader:article_detail' a.pk %}">
+            {{ a.title }}
+        </a>
+      </li>
+    {% empty %}
+      <li><em>No articles found.</em></li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

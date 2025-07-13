@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{ article.title }}</title>
+
+  <script>
+    const ARTICLE_ID = {{ article.pk }};
+       console.log('🎯 ARTICLE_ID defined as', ARTICLE_ID);
+  
+  </script>
+  <script src="{% static 'reader/js/note.js' %}"></script>
+</head>
+<body>
+  <div style="display:flex; height:100vh;">
+
+    <!-- 左侧：文章内容 -->
+    <div id="text-area"
+         style="flex:1; padding:10px; border:1px solid #ccc; overflow:auto;">
+      {{ article.content|linebreaks }}
+    </div>
+
+    <!-- 中间：笔记列表 -->
+    <div style="flex:1; padding:10px; border:1px solid #ccc; overflow:auto;">
+      <h2>Notes</h2>
+      <div id="notes-list">
+        {% for note in notes %}
+          <div class="note" data-id="{{ note.pk }}">
+            <strong class="sel">{{ note.selected_text }}</strong>:
+            <span class="txt">{{ note.note_text }}</span>
+            <button class="btn-edit">edit</button>
+            <button class="btn-del">delete</button>
+          </div>
+        {% empty %}
+          <em>No notes yet.</em>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- 右侧：输入区 -->
+    <div style="flex:1; padding:10px; border:1px solid #ccc; overflow:auto;">
+      <p>Selected: <input type="text" id="input-selected" readonly></p>
+      <p>Note:     <input type="text" id="input-note"></p>
+      <button id="btn-submit">Submit</button>
+    </div>
+
+  </div>
+</body>
+</html>
